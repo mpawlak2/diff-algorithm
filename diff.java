@@ -1,22 +1,22 @@
 public class diff {
-    public static int MATCH = 0;
-    public static int UP = 1;
-    public static int LEFT = 2;
+    // find LCS - longest common subsequence
+    // LCS-LENGTH implementation from Introduction To Algorithms
+    // O(n*m)
+    static String s1 = "bdcaba";
+    static String s2 = "abcbdab";
+
+    static int[][] b = new int[s1.length() + 1][s2.length() + 1];
+    static int[][] c = new int[s1.length() + 1][s2.length() + 1];
+
+    static int MATCH = 0;
+    static int UP = 1;
+    static int LEFT = 2;
 
     public static void main(String[] args) {
-        // find LCS - longest common subsequence
-        // LCS-LENGTH implementation from Introduction To Algorithms
-        // O(n*m)
-        String s1 = "bdcaba";
-        String s2 = "abcbdab";
-
         int m = s1.length();
         int n = s2.length();
 
-        int[][] b = new int[m + 1][n + 1];
-        int[][] c = new int[m + 1][n + 1];
 
-        // set first columnd and row to 0
         for(int i = 0; i <= m; i++)
             c[i][0] = 0;
         for(int j = 0; j <= n; j++)
@@ -36,5 +36,19 @@ public class diff {
                 }
             }
         }
+
+        printLCS(m, n);
+    }
+
+    // O(m + n)
+    public static void printLCS(int lenA, int lenB) {
+        if(lenA == 0 || lenB == 0)
+            return;
+        if (b[lenA][lenB] == MATCH) {
+            printLCS(lenA - 1, lenB - 1);
+            System.out.print(s1.charAt(lenA - 1));
+        } else if (b[lenA][lenB] == UP)
+            printLCS(lenA - 1, lenB);
+        else printLCS(lenA, lenB - 1);
     }
 }
